@@ -1,5 +1,6 @@
 package org.dasta.quizzes.lawquiz;
 
+import android.widget.*;
 import org.dasta.quizzes.lawquiz.util.SystemUiHider;
 
 import android.annotation.TargetApi;
@@ -112,7 +113,7 @@ public class MainActivity extends Activity {
         // Upon interacting with UI controls, delay any scheduled hide()
         // operations to prevent the jarring behavior of controls going away
         // while interacting with the UI.
-        findViewById(R.id.dummy_button).setOnTouchListener(mDelayHideTouchListener);
+        findViewById(R.id.gotoapp_button).setOnTouchListener(mDelayHideTouchListener);
     }
 
     @Override
@@ -156,5 +157,25 @@ public class MainActivity extends Activity {
     private void delayedHide(int delayMillis) {
         mHideHandler.removeCallbacks(mHideRunnable);
         mHideHandler.postDelayed(mHideRunnable, delayMillis);
+    }
+
+    /***
+     * Is this any good at all?
+     * */
+    public void showQuiz(View view){
+        //Toast.makeText(MainActivity.this, "Button clicked", Toast.LENGTH_SHORT).show();
+        LinearLayout layout = new LinearLayout(this);
+        CheckBox chkb1 = new CheckBox(this);
+        chkb1.setText("Response 1");
+        layout.addView(chkb1);
+
+        CheckBox chkb2 = new CheckBox(this);
+        chkb2.setText("Response 2");
+        layout.addView(chkb2);
+        LinearLayout mainlayout = (LinearLayout) findViewById(R.id.fullscreen_content_controls);
+        TextView tv = (TextView)findViewById(R.id.fullscreen_content);
+        mainlayout.removeView(tv);
+        System.out.println("Removed view " + tv);
+        mainlayout.addView(layout);
     }
 }
