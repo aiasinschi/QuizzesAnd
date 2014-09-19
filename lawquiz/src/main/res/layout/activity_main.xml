@@ -38,7 +38,59 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="@string/gotoquiz_button" />
+                android:text="@string/gotoquiz_button"
+                android:onClick="showQuiz"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:layout_gravity="center|center"
+                android:id="@+id/check_box_controls"
+                android:background="@color/black_overlay">
+
+            <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceMedium"
+                    android:text="Medium Text"
+                    android:id="@+id/textViewQuestion"
+                    android:background="@drawable/customborder"
+                    android:layout_gravity="center_horizontal"/>
+
+            <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New CheckBox"
+                    android:id="@+id/checkBoxA"
+                    android:background="@drawable/customborder"
+                    android:layout_gravity="center_horizontal"/>
+
+            <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New CheckBox"
+                    android:id="@+id/checkBoxB"
+                    android:background="@drawable/customborder"
+                    android:layout_gravity="center_horizontal"/>
+
+            <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="New CheckBox"
+                    android:id="@+id/checkBoxC"
+                    android:background="@drawable/customborder"
+                    android:layout_gravity="center_horizontal"/>
+
+            <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/next_question_button"
+                    android:id="@+id/button"
+                    android:onClick="nextQuestion"
+                    android:layout_gravity="center_horizontal"/>
 
         </LinearLayout>
     </FrameLayout>
