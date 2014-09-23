@@ -50,6 +50,11 @@ public class MainActivity extends Activity {
      */
     private SystemUiHider mSystemUiHider;
 
+    /**
+     * The current question
+     */
+    private Question q;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -179,12 +184,13 @@ public class MainActivity extends Activity {
         checkBoxLayout.bringToFront();
         checkBoxLayout.setVisibility(LinearLayout.VISIBLE);
 
-        findViewById(R.id.fullscreen_content_controls).setVisibility(LinearLayout.INVISIBLE);
+        findViewById(R.id.fullscreen_content_controls).setVisibility(TextView.INVISIBLE);
         view.refreshDrawableState();
+
     }
 
     public void nextQuestion(View view){
-        Question q = DataStore.nextQuestion();
+        q = DataStore.nextQuestion();
 
         TextView questionText = (TextView)findViewById(R.id.textViewQuestion);
         questionText.setText(q.getQuestion());
@@ -200,5 +206,15 @@ public class MainActivity extends Activity {
         CheckBox checkC = (CheckBox)findViewById(R.id.checkBoxC);
         checkC.setText(q.getAnswerTexts().get(2));
         checkC.setChecked(false);
+    }
+
+    public void showAnswers(View view){
+        LinearLayout checkBoxLayout = (LinearLayout)findViewById(R.id.check_box_controls);
+        View ansView = checkBoxLayout.getChildAt(checkBoxLayout.getChildCount() - 1);
+        ((CheckBox)ansView.findViewById(R.id.checkBoxAA)).setChecked(q.getCorrectAnswers()[0] == 1);
+        ((CheckBox)ansView.findViewById(R.id.checkBoxAB)).setChecked(q.getCorrectAnswers()[1] == 1);
+        ((CheckBox)ansView.findViewById(R.id.checkBoxAC)).setChecked(q.getCorrectAnswers()[2] == 1);
+        ansView.setVisibility(TextView.VISIBLE);
+
     }
 }

@@ -55,42 +55,103 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceMedium"
-                    android:text="Medium Text"
+                    android:text="@string/dummy_question"
                     android:id="@+id/textViewQuestion"
-                    android:background="@drawable/customborder"
-                    android:layout_gravity="center_horizontal"/>
+                    android:layout_gravity="left|top"/>
 
             <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New CheckBox"
+                    android:text="@string/dummy_answerA"
                     android:id="@+id/checkBoxA"
-                    android:background="@drawable/customborder"
-                    android:layout_gravity="center_horizontal"/>
+
+                    android:drawableLeft="@android:color/transparent"
+                    android:drawablePadding="20dp"
+                    android:padding="5dp"
+                    android:layout_gravity="left"/>
 
             <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New CheckBox"
                     android:id="@+id/checkBoxB"
-                    android:background="@drawable/customborder"
-                    android:layout_gravity="center_horizontal"/>
+
+                    android:drawableLeft="@android:color/transparent"
+                    android:drawablePadding="20dp"
+                    android:padding="5dp"
+
+                    android:text="@string/dummy_answerB"
+                    android:layout_gravity="left"/>
 
             <CheckBox
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="New CheckBox"
+                    android:text="@string/dummy_answerC"
                     android:id="@+id/checkBoxC"
-                    android:background="@drawable/customborder"
-                    android:layout_gravity="center_horizontal"/>
+
+                    android:drawableLeft="@android:color/transparent"
+                    android:drawablePadding="20dp"
+                    android:padding="5dp"
+
+
+                    android:layout_gravity="left"/>
 
             <Button
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/next_question_button"
                     android:id="@+id/button"
                     android:onClick="nextQuestion"
                     android:layout_gravity="center_horizontal"/>
+
+            <Button
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/show_answer_button"
+                    android:id="@+id/button2"
+                    android:onClick="showAnswers"/>
+
+            <TableLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:visibility="invisible"
+                    android:id="@+id/ans_table">
+
+                <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                    <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="A"
+                            android:id="@+id/checkBoxAA"
+                            android:layout_column="1"/>
+                </TableRow>
+
+                <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                    <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="B"
+                            android:id="@+id/checkBoxAB"
+                            android:layout_column="1"/>
+                </TableRow>
+
+                <TableRow
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent">
+
+                    <CheckBox
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="C"
+                            android:id="@+id/checkBoxAC"
+                            android:layout_column="1"/>
+                </TableRow>
+            </TableLayout>
 
         </LinearLayout>
     </FrameLayout>

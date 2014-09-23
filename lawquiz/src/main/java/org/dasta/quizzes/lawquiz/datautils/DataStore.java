@@ -81,6 +81,8 @@ public class DataStore {
             start = end;
             question.addAnswerText(sq);
             debug(LOGOWNER, "ans c):" + sq);
+            // TODO: add real answers parsing code
+            question.addCorrectAnswer(1);
             allQuestions.add(question);
         }
         return true;
