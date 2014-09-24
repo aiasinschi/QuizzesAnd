@@ -55,6 +55,8 @@ public class MainActivity extends Activity {
      */
     private Question q;
 
+    private boolean answered = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -66,7 +68,7 @@ public class MainActivity extends Activity {
 
         // quiz related initialization
         DataStore.randomize();
-        DataStore.initialize(contentView.getContext(), "grile.txt");
+        DataStore.initialize(contentView.getContext(), "grile.txt", "rasp.txt");
 
         // Set up an instance of SystemUiHider to control the system UI for
         // this activity.
@@ -212,35 +214,53 @@ public class MainActivity extends Activity {
         ansView.setVisibility(TextView.INVISIBLE);
     }
 
-    public void nextQuestion(View view){
 
+    private int[] getScores(View view){
         int[] ans = new int[3];
 
         CheckBox checkA = (CheckBox)findViewById(R.id.checkBoxA);
         ans[0] = checkA.isChecked() ? 1 : 0;
-
         CheckBox checkB = (CheckBox)findViewById(R.id.checkBoxB);
         ans[1] = checkB.isChecked() ? 1 : 0;
-
         CheckBox checkC = (CheckBox)findViewById(R.id.checkBoxC);
         ans[2] = checkC.isChecked() ? 1 : 0;
 
-        // compute score
-        DataStore.answerQuestion(q, ans);
+        return ans;
+    }
 
+    private void showScore(View view){
+        if (!answered) {
+            DataStore.answerQuestion(q, getScores(view));
+            answered = true;
+        }
         TextView scoreValue = (TextView) findViewById(R.id.textViewScoreValue);
         scoreValue.setText(DataStore.getScoreString());
+    }
 
+    public void nextQuestion(View view){
+        showScore(view);
         loadNextQuestion(view);
+        setEnabledCheckboxes(view, true);
+        answered = false;
+    }
+
+    private void setEnabledCheckboxes(View view, boolean enabled){
+        CheckBox checkA = (CheckBox)findViewById(R.id.checkBoxA);
+        checkA.setEnabled(enabled);
+        CheckBox checkB = (CheckBox)findViewById(R.id.checkBoxB);
+        checkB.setEnabled(enabled);
+        CheckBox checkC = (CheckBox)findViewById(R.id.checkBoxC);
+        checkC.setEnabled(enabled);
     }
 
     public void showAnswers(View view){
+        showScore(view);
         LinearLayout checkBoxLayout = (LinearLayout)findViewById(R.id.check_box_controls);
         View ansView = checkBoxLayout.getChildAt(checkBoxLayout.getChildCount() - 1);
         ((CheckBox)ansView.findViewById(R.id.checkBoxAA)).setChecked(q.getCorrectAnswers()[0] == 1);
         ((CheckBox)ansView.findViewById(R.id.checkBoxAB)).setChecked(q.getCorrectAnswers()[1] == 1);
         ((CheckBox)ansView.findViewById(R.id.checkBoxAC)).setChecked(q.getCorrectAnswers()[2] == 1);
         ansView.setVisibility(TextView.VISIBLE);
-
+        setEnabledCheckboxes(view, false);
     }
 }

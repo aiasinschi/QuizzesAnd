@@ -51,7 +51,9 @@ public class Question {
     }
 
     public void addCorrectAnswer(int pos){
-        correctAnswers[pos] = 1;
+        if ((pos < MAX_NUM_QUESTIONS) && (pos >= 0)) {
+            correctAnswers[pos] = 1;
+        }
     }
 
     public double computeScore(int[] answers){

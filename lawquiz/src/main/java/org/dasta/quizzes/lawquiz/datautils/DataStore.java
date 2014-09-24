@@ -27,6 +27,7 @@ public class DataStore {
     private static Random rndGen = new Random();
     private static int answered = 0;
     private static int correctAnswers = 0;
+    private static Set<Character> valids = new HashSet<Character>();
 
     public static void answerQuestion(Question q, int[] ans){
         if (Math.abs(q.computeScore(ans) - 1.0) < 0.01)  {
@@ -104,18 +105,50 @@ public class DataStore {
             start = end;
             question.addAnswerText(sq);
             debug(LOGOWNER, "ans c):" + sq);
-            // TODO: add real answers parsing code
-            question.addCorrectAnswer(0);
             allQuestions.add(question);
         }
         return true;
     }
 
-    public static boolean initialize(Context context, String fileName) {
+    private static String trim(String str){
+        valids.add('a');
+        valids.add('b');
+        valids.add('c');
+        str = str.trim();
+        StringBuffer tmp =new StringBuffer("");
+        for (int i=0; i < str.length(); i++){
+            if (valids.contains(str.charAt(i))) {
+                tmp.append(str.charAt(i));
+            }
+        }
+        return tmp.toString();
+    }
+
+    public static boolean parseAnswers(StringBuffer answers){
+        Question question;
+        int start;
+        int end = 0;
+        for (int position = 0; position < allQuestions.size(); position ++){
+            question = allQuestions.get(position);
+            start = answers.indexOf(",", end);
+            end = answers.indexOf(",", start + 1);
+            end = end < 0 ? answers.length() : end;
+            String sa = answers.substring(start + 1, end);
+            sa = trim(sa.trim().toLowerCase());
+            debug(LOGOWNER, ">>" + sa + "<<");
+            for (int i = 0; i < sa.length(); i ++){
+                question.addCorrectAnswer( (byte)sa.charAt(i) - (byte)'a' );
+            }
+        }
+        return true;
+    }
+
+
+    public static boolean initialize(Context context, String questionsFileName, String ansFileName) {
         StringBuffer content = new StringBuffer("");
         AssetManager am = context.getAssets();
         try {
-            InputStream is = am.open(fileName);
+            InputStream is = am.open(questionsFileName);
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
 
             String line;
@@ -131,7 +164,28 @@ public class DataStore {
         } catch (IOException ex){
             return false;
         }
-        return parseQuestions(content);
+        StringBuffer answers = new StringBuffer("");
+        try {
+            InputStream is = am.open(ansFileName);
+            BufferedReader br = new BufferedReader(new InputStreamReader(is));
+
+            String line;
+            while ((line = br.readLine()) != null){
+                // process line
+                if (line.trim().length() == 0) {
+                    continue;
+                } else {
+                    answers.append(line);
+                }
+            }
+            br.close();
+        } catch (IOException ex){
+            return false;
+        }
+        boolean res = parseQuestions(content);
+        debug(LOGOWNER, answers.toString());
+        res = res && parseAnswers(answers);
+        return res;
     }
 
 
@@ -404,11 +458,62 @@ public class DataStore {
 
 
 
+    public static StringBuffer defaultanswers = new StringBuffer("1,ab\n" +
+            "2,b\n" +
+            "3,c\n" +
+            "4,ac\n" +
+            "5,bc\n" +
+            "6,ac\n" +
+            "7,a\n" +
+            "8,b\n" +
+            "9,c\n" +
+            "10,a\n" +
+            "11,a\n" +
+            "12,a\n" +
+            "13,b\n" +
+            "14,c\n" +
+            "15,bc\n" +
+            "16,ab\n" +
+            "17,ac\n" +
+            "18,a\n" +
+            "19,c\n" +
+            "20,c\n" +
+            "21,c\n" +
+            "22,b\n" +
+            "23,bc\n" +
+            "24,bc\n" +
+            "25,ab\n" +
+            "26,ac\n" +
+            "27,a\n" +
+            "28,a\n" +
+            "29,a\n" +
+            "30,b\n" +
+            "31,b\n" +
+            "32,b\n" +
+            "33,b\n" +
+            "34,ab\n" +
+            "35,ac\n" +
+            "36,b\n" +
+            "37,a\n" +
+            "38,a\n" +
+            "39,b\n" +
+            "40,a\n" +
+            "41,bc\n" +
+            "42,a\n" +
+            "43,bc\n" +
+            "44,a\n" +
+            "45,a\n" +
+            "46,ab\n" +
+            "47,ac\n" +
+            "48,b\n" +
+            "49,bc\n" +
+            "50,b");
+
+
 /*
-
     public static void main(String[] args){
-        readQuestions(content);
+        parseAnswers(defaultanswers);
     }
-
 */
+
 }
