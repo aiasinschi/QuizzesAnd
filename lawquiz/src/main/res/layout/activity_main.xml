@@ -51,6 +51,27 @@
                 android:id="@+id/check_box_controls"
                 android:background="@color/black_overlay">
 
+            <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:id="@+id/textViewScore"
+                        android:layout_column="39"
+                        android:text="@string/current_score"/>
+
+                <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textAppearance="?android:attr/textAppearanceMedium"
+                        android:text="0"
+                        android:id="@+id/textViewScoreValue"/>
+            </LinearLayout>
+
             <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -113,7 +134,7 @@
             <TableLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:visibility="invisible"
+                    android:visibility="visible"
                     android:id="@+id/ans_table">
 
                 <TableRow
@@ -126,31 +147,23 @@
                             android:text="A"
                             android:id="@+id/checkBoxAA"
                             android:layout_column="1"/>
-                </TableRow>
-
-                <TableRow
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent">
 
                     <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="B"
                             android:id="@+id/checkBoxAB"
-                            android:layout_column="1"/>
-                </TableRow>
-
-                <TableRow
-                        android:layout_width="fill_parent"
-                        android:layout_height="fill_parent">
+                            android:layout_column="17"/>
 
                     <CheckBox
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="C"
                             android:id="@+id/checkBoxAC"
-                            android:layout_column="1"/>
+                            android:layout_column="34"/>
+
                 </TableRow>
+
             </TableLayout>
 
         </LinearLayout>

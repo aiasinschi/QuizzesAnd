@@ -56,10 +56,14 @@ public class Question {
 
     public double computeScore(int[] answers){
         double s = 0d;
-        for(int i=0; i< answers.length; i++){
+        int ones = 0;
+        int ans = 0;
+        for(int i = 0; i< answers.length; i++){
             s += answers[i] * correctAnswers[i];
+            ones += correctAnswers[i];
+            ans += answers[i];
         }
-        return (1.0d * s)/answers.length;
+        return (ones != ans) ? 0 : (1.0d * s)/ones;
     }
 
 }

@@ -176,9 +176,8 @@ public class MainActivity extends Activity {
      * So far so good
      * */
     public void showQuiz(View view){
-        //((LinearLayout)view.getParent()).removeView(view);
 
-        nextQuestion(view);
+        loadNextQuestion(view);
 
         LinearLayout checkBoxLayout = (LinearLayout)findViewById(R.id.check_box_controls);
         checkBoxLayout.bringToFront();
@@ -189,23 +188,50 @@ public class MainActivity extends Activity {
 
     }
 
-    public void nextQuestion(View view){
+    private void loadNextQuestion(View view){
         q = DataStore.nextQuestion();
 
         TextView questionText = (TextView)findViewById(R.id.textViewQuestion);
         questionText.setText(q.getQuestion());
 
         CheckBox checkA = (CheckBox)findViewById(R.id.checkBoxA);
-        checkA.setText(q.getAnswerTexts().get(0));
+        checkA.setText("A) " + q.getAnswerTexts().get(0));
         checkA.setChecked(false);
 
         CheckBox checkB = (CheckBox)findViewById(R.id.checkBoxB);
-        checkB.setText(q.getAnswerTexts().get(1));
+        checkB.setText("B) " + q.getAnswerTexts().get(1));
         checkB.setChecked(false);
 
         CheckBox checkC = (CheckBox)findViewById(R.id.checkBoxC);
-        checkC.setText(q.getAnswerTexts().get(2));
+        checkC.setText("C) " + q.getAnswerTexts().get(2));
         checkC.setChecked(false);
+
+        LinearLayout checkBoxLayout = (LinearLayout)findViewById(R.id.check_box_controls);
+        View ansView = checkBoxLayout.getChildAt(checkBoxLayout.getChildCount() - 1);
+
+        ansView.setVisibility(TextView.INVISIBLE);
+    }
+
+    public void nextQuestion(View view){
+
+        int[] ans = new int[3];
+
+        CheckBox checkA = (CheckBox)findViewById(R.id.checkBoxA);
+        ans[0] = checkA.isChecked() ? 1 : 0;
+
+        CheckBox checkB = (CheckBox)findViewById(R.id.checkBoxB);
+        ans[1] = checkB.isChecked() ? 1 : 0;
+
+        CheckBox checkC = (CheckBox)findViewById(R.id.checkBoxC);
+        ans[2] = checkC.isChecked() ? 1 : 0;
+
+        // compute score
+        DataStore.answerQuestion(q, ans);
+
+        TextView scoreValue = (TextView) findViewById(R.id.textViewScoreValue);
+        scoreValue.setText(DataStore.getScoreString());
+
+        loadNextQuestion(view);
     }
 
     public void showAnswers(View view){

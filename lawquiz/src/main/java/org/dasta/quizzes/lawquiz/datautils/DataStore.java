@@ -25,6 +25,29 @@ public class DataStore {
     private static int current = 0;
     private static boolean isRandom = false;
     private static Random rndGen = new Random();
+    private static int answered = 0;
+    private static int correctAnswers = 0;
+
+    public static void answerQuestion(Question q, int[] ans){
+        if (Math.abs(q.computeScore(ans) - 1.0) < 0.01)  {
+            correctAnswers ++;
+        }
+        answered ++;
+    }
+
+    public static String getScoreString(){
+        return correctAnswers + " out of " + answered;
+    }
+
+    public static double getScorePercent(){
+        if (answered == 0)
+            return 0;
+        return (correctAnswers * 100.0) / answered;
+    }
+
+    public static boolean notStarted(){
+        return  answered == 0;
+    }
 
     public static Question nextQuestion() {
         if ((allQuestions == null) || (allQuestions.isEmpty())) {
@@ -82,7 +105,7 @@ public class DataStore {
             question.addAnswerText(sq);
             debug(LOGOWNER, "ans c):" + sq);
             // TODO: add real answers parsing code
-            question.addCorrectAnswer(1);
+            question.addCorrectAnswer(0);
             allQuestions.add(question);
         }
         return true;
